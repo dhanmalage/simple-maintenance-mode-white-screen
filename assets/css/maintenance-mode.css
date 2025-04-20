@@ -1,0 +1,14 @@
+body {
+    background-color: white;
+    color: black;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+}
+.maintenance-text {
+    font-size: 26px;
+}

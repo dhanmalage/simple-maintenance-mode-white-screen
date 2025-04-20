@@ -1,0 +1,29 @@
+msgid "Maintenance Mode Settings"
+msgstr ""
+
+msgid "Maintenance Mode"
+msgstr ""
+
+msgid "Enable Maintenance Mode"
+msgstr ""
+
+msgid "Maintenance Mode Text"
+msgstr ""
+
+msgid "Leaving this text block blank will display a white screen on frontend."
+msgstr ""
+
+msgid "Font Size (px)"
+msgstr ""
+
+msgid "Set the font size for the maintenance text on the frontend."
+msgstr ""
+
+msgid "Save Settings"
+msgstr ""
+
+msgid "Settings saved."
+msgstr ""
+
+msgid "Maintenance Mode"
+msgstr ""

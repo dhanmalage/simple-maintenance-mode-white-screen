@@ -51,7 +51,7 @@ add_action('template_redirect', 'smmws_enable_maintenance_mode');
 function smmws_enable_maintenance_mode() {
     if (!is_user_logged_in() && get_option('smmws_enabled', 0)) {
         $smmws_text = get_option('smmws_text', '');
-        $smmws_font_size = get_option('smmws_font_size', '26'); // Default font size: 16px
+        $smmws_font_size = get_option('smmws_font_size', '26'); // Default font size: 26px
 
         // Enqueue the maintenance mode CSS
         wp_enqueue_style('smmws-maintenance-mode', plugin_dir_url(__FILE__) . 'assets/css/maintenance-mode.css', array(), '1.0');

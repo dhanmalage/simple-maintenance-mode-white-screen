@@ -21,7 +21,7 @@ if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST' &
 // Get existing settings
 $smmws_enabled = get_option('smmws_enabled', 0);
 $smmws_text = get_option('smmws_text', '');
-$smmws_font_size = get_option('smmws_font_size', '16'); // Default font size: 16px
+$smmws_font_size = get_option('smmws_font_size', '26'); // Default font size: 26px
 ?>
 
 <div class="wrap">

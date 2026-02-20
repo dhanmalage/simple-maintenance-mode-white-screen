@@ -4,7 +4,7 @@ Donate link: https://buymeacoffee.com/dhanmalage
 Tags: maintenance, maintenance mode, simple, downtime, under construction
 Requires at least: 5.2
 Tested up to: 6.9
-Stable tag: 1.7
+Stable tag: 1.8
 Requires PHP: 7.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -37,6 +37,11 @@ Yes, you can set the font size in the "Font Size (px)" field in the plugin setti
 1. Backend view of plugin settings after plugin activated.
 
 == Changelog ==
+
+= 1.8 =
+* Enhancement - Added admin bar indicator when maintenance mode is active with link to settings.
+* Enhancement - Moved form processing to admin_init for proper Post/Redirect/Get pattern.
+* Enhancement - Replaced query parameter with transient for settings saved notice.
 
 = 1.7 =
 * Fix - esc_html() replaced with esc_html__() for proper translation support on settings saved notice.

@@ -2,11 +2,11 @@
 /*
  * Plugin Name: Simple Maintenance Mode White Screen
  * Description: Enable maintenance mode with white screen or custom text displayed on the frontend.
- * Version: 1.2
+ * Version: 1.4
  * Requires at least: 5.2
  * Requires PHP: 7.0
- * Author: Dhan Malage
- * Author URI: https://whenalive.com/
+ * Author: Nuoria
+ * Author URI: https://nuoria.com/
  * License: GPL v2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: simple-maintenance-mode-white-screen
@@ -16,12 +16,6 @@
 // Prevent direct access
 if (!defined('ABSPATH')) {
     exit;
-}
-
-// Load plugin text domain for translations
-add_action('plugins_loaded', 'smmws_load_textdomain');
-function smmws_load_textdomain() {
-    load_plugin_textdomain('simple-maintenance-mode-white-screen', false, dirname(plugin_basename(__FILE__)) . '/languages');
 }
 
 // Add menu to access plugin settings

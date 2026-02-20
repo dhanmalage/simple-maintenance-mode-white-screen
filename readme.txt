@@ -3,8 +3,8 @@ Contributors: punsisi
 Donate link: https://buymeacoffee.com/dhanmalage
 Tags: maintenance, maintenance mode, simple, downtime, under construction
 Requires at least: 5.2
-Tested up to: 6.8
-Stable tag: 1.2
+Tested up to: 6.9
+Stable tag: 1.4
 Requires PHP: 7.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -37,6 +37,13 @@ Yes, you can set the font size in the "Font Size (px)" field in the plugin setti
 1. Backend view of plugin settings after plugin activated.
 
 == Changelog ==
+
+= 1.4 =
+* Author name updated.
+
+= 1.3 =
+* Author URL updated.
+* Tested up to 6.9
 
 = 1.2 =
 * Fix - Maintenance mode page title updated. It will be using site title. get_bloginfo( 'name' ).

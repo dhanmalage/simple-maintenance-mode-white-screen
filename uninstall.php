@@ -22,3 +22,7 @@ if (!defined('WP_UNINSTALL_PLUGIN')) {
 delete_option('smmws_enabled');
 delete_option('smmws_text');
 delete_option('smmws_font_size');
+delete_option('smmws_bg_color');
+delete_option('smmws_text_color');
+delete_option('smmws_font_family');
+delete_option('smmws_logo');

@@ -28,8 +28,12 @@ When enabled, all non-logged-in visitors will see the maintenance page. Logged-i
 | Setting | Description | Default |
 |---------|-------------|---------|
 | **Enable Maintenance Mode** | Toggle maintenance mode on/off | Off |
-| **Maintenance Mode Text** | Message displayed to visitors. Leave blank for a plain white screen. | Empty |
+| **Maintenance Mode Text** | Message displayed to visitors. Leave blank for a plain white screen. Supports basic HTML (bold, italic, links, etc.). | Empty |
 | **Font Size (px)** | Font size of the maintenance message (10-100px) | 26px |
+| **Font Family** | Font used on the maintenance page. Choose from web-safe fonts or use the theme default. | Default (Theme Font) |
+| **Background Color** | Background color of the maintenance page | White (#ffffff) |
+| **Text Color** | Text color on the maintenance page | Black (#000000) |
+| **Logo** | Optional logo image displayed above the maintenance text | None |
 
 ### Admin Bar Indicator
 
@@ -57,13 +61,14 @@ simple-maintenance-mode-white-screen/
 - The plugin hooks into `template_redirect` to intercept frontend requests.
 - If maintenance mode is enabled and the visitor is not logged in, the plugin serves a standalone HTML page and exits — bypassing the active theme entirely.
 - Form submissions are processed on `admin_init` (before output) using the Post/Redirect/Get pattern to avoid header conflicts.
-- Settings are stored in the `wp_options` table as `smmws_enabled`, `smmws_text`, and `smmws_font_size`.
+- Settings are stored in the `wp_options` table as `smmws_enabled`, `smmws_text`, `smmws_font_size`, `smmws_bg_color`, `smmws_text_color`, `smmws_font_family`, and `smmws_logo`.
 
 ## Hooks and Filters
 
 | Hook | Type | Description |
 |------|------|-------------|
 | `admin_menu` | Action | Registers the settings page under the admin menu |
+| `admin_enqueue_scripts` | Action | Loads color picker and media uploader on settings page |
 | `admin_init` | Action | Processes form submissions before output |
 | `admin_bar_menu` | Action | Adds the maintenance mode indicator to the admin bar |
 | `wp_head` / `admin_head` | Action | Injects admin bar indicator styles |
@@ -73,7 +78,7 @@ simple-maintenance-mode-white-screen/
 ## Uninstall Behavior
 
 - **Deactivating** the plugin preserves all settings. You can reactivate later without reconfiguring.
-- **Deleting** the plugin removes all options (`smmws_enabled`, `smmws_text`, `smmws_font_size`) from the database via `uninstall.php`.
+- **Deleting** the plugin removes all options (`smmws_enabled`, `smmws_text`, `smmws_font_size`, `smmws_bg_color`, `smmws_text_color`, `smmws_font_family`, `smmws_logo`) from the database via `uninstall.php`.
 
 ## Translation
 

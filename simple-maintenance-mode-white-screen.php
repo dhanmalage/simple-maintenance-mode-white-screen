@@ -1,8 +1,8 @@
 <?php
 /*
  * Plugin Name: Simple Maintenance Mode White Screen
- * Description: Enable maintenance mode with white screen or custom text displayed on the frontend.
- * Version: 1.8
+ * Description: Lightweight maintenance mode plugin. Show a coming soon page, under construction notice, or white screen to visitors while you work on your site.
+ * Version: 2.0
  * Requires at least: 5.2
  * Requires PHP: 7.0
  * Author: Nuoria
@@ -40,6 +40,21 @@ function smmws_plugin_action_links($links) {
     return $links;
 }
 
+// Enqueue admin scripts and styles for the settings page
+add_action('admin_enqueue_scripts', 'smmws_enqueue_admin_scripts');
+function smmws_enqueue_admin_scripts($hook_suffix) {
+    if ('toplevel_page_simple-maintenance-mode-white-screen' !== $hook_suffix) {
+        return;
+    }
+
+    // Color picker
+    wp_enqueue_style('wp-color-picker');
+    wp_enqueue_script('wp-color-picker');
+
+    // Media uploader
+    wp_enqueue_media();
+}
+
 // Handle form submission early before any output is sent
 add_action('admin_init', 'smmws_handle_settings_save');
 function smmws_handle_settings_save() {
@@ -53,10 +68,22 @@ function smmws_handle_settings_save() {
 
     update_option('smmws_enabled', isset($_POST['smmws_enabled']) ? 1 : 0);
     if (isset($_POST['smmws_text'])) {
-        update_option('smmws_text', sanitize_textarea_field(wp_unslash($_POST['smmws_text'])));
+        update_option('smmws_text', wp_kses_post(wp_unslash($_POST['smmws_text'])));
     }
     if (isset($_POST['smmws_font_size'])) {
         update_option('smmws_font_size', sanitize_text_field(wp_unslash($_POST['smmws_font_size'])));
+    }
+    if (isset($_POST['smmws_bg_color'])) {
+        update_option('smmws_bg_color', sanitize_hex_color(wp_unslash($_POST['smmws_bg_color'])));
+    }
+    if (isset($_POST['smmws_text_color'])) {
+        update_option('smmws_text_color', sanitize_hex_color(wp_unslash($_POST['smmws_text_color'])));
+    }
+    if (isset($_POST['smmws_font_family'])) {
+        update_option('smmws_font_family', sanitize_text_field(wp_unslash($_POST['smmws_font_family'])));
+    }
+    if (isset($_POST['smmws_logo'])) {
+        update_option('smmws_logo', esc_url_raw(wp_unslash($_POST['smmws_logo'])));
     }
 
     set_transient('smmws_settings_saved', true, 30);
@@ -114,9 +141,10 @@ function smmws_enable_maintenance_mode() {
     if (!is_user_logged_in() && get_option('smmws_enabled', 0)) {
         $smmws_text = get_option('smmws_text', '');
         $smmws_font_size = get_option('smmws_font_size', '26'); // Default font size: 26px
-
-        // Enqueue the maintenance mode CSS
-        wp_enqueue_style('smmws-maintenance-mode', plugin_dir_url(__FILE__) . 'assets/css/maintenance-mode.css', array(), '1.0');
+        $smmws_bg_color = get_option('smmws_bg_color', '');
+        $smmws_text_color = get_option('smmws_text_color', '');
+        $smmws_font_family = get_option('smmws_font_family', '');
+        $smmws_logo = get_option('smmws_logo', '');
 
         // Include the template file
         include plugin_dir_path(__FILE__) . 'includes/template.php';

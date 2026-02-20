@@ -1,18 +1,6 @@
 # Simple Maintenance Mode White Screen
 
-Enable maintenance mode with a white screen or custom text displayed on the frontend.
-
-## Description
-
-Simple Maintenance Mode allows you to enable a maintenance mode on your WordPress site. When enabled, visitors will see a custom message or a white screen (if no text is entered). It includes a settings page where you can customize the maintenance mode message and font size.
-
-## Features
-
-- Enable/disable maintenance mode with a single checkbox
-- Custom maintenance message text
-- Configurable font size
-- Logged-in users bypass maintenance mode
-- Clean uninstall (removes all plugin data from the database)
+A lightweight WordPress plugin that displays a white screen or custom message to visitors while your site is under maintenance. Logged-in administrators can continue browsing the site normally.
 
 ## Requirements
 
@@ -21,50 +9,76 @@ Simple Maintenance Mode allows you to enable a maintenance mode on your WordPres
 
 ## Installation
 
-1. Upload the plugin to the `/wp-content/plugins/` directory.
-2. Activate the plugin through the **Plugins** menu in WordPress.
-3. Go to the **Maintenance Mode** menu in the admin dashboard to configure the plugin settings.
-4. Enable or disable maintenance mode and set your custom message.
+1. Upload the `simple-maintenance-mode-white-screen` folder to `/wp-content/plugins/`.
+2. Activate the plugin through **Plugins > Installed Plugins**.
+3. Navigate to **Maintenance Mode** in the admin sidebar to configure settings.
 
-## Screenshots
+## Usage
 
-![Backend view of plugin settings](assets/screenshot-1.png)
+### Enabling Maintenance Mode
 
-## Changelog
+1. Go to **Maintenance Mode** in the WordPress admin menu.
+2. Check the **Enable Maintenance Mode** checkbox.
+3. Click **Save Settings**.
 
-### 1.8
-- Enhancement - Added admin bar indicator when maintenance mode is active with link to settings.
-- Enhancement - Moved form processing to admin_init for proper Post/Redirect/Get pattern.
-- Enhancement - Replaced query parameter with transient for settings saved notice.
+When enabled, all non-logged-in visitors will see the maintenance page. Logged-in users with administrator privileges will see the site normally.
 
-### 1.7
-- Fix - esc_html() replaced with esc_html__() for proper translation support on settings saved notice.
+### Customizing the Maintenance Page
 
-### 1.6
-- Fix - Inconsistent default font size across plugin files.
+| Setting | Description | Default |
+|---------|-------------|---------|
+| **Enable Maintenance Mode** | Toggle maintenance mode on/off | Off |
+| **Maintenance Mode Text** | Message displayed to visitors. Leave blank for a plain white screen. | Empty |
+| **Font Size (px)** | Font size of the maintenance message (10-100px) | 26px |
 
-### 1.5
-- Added uninstall.php for clean database cleanup when plugin is deleted.
+### Admin Bar Indicator
 
-### 1.4
-- Author name updated.
+When maintenance mode is active, a red **Maintenance Mode: ON** indicator appears in the WordPress admin bar on all pages. Clicking it takes you directly to the plugin settings page. The indicator is only visible to administrators.
 
-### 1.3
-- Author URL updated.
-- Tested up to 6.9
+## File Structure
 
-### 1.2
-- Fix - Maintenance mode page title updated to use site title.
-- Tested up to 6.8
+```
+simple-maintenance-mode-white-screen/
+├── assets/
+│   └── css/
+│       └── maintenance-mode.css    # Frontend maintenance page styles
+├── includes/
+│   ├── settings-page.php           # Admin settings page template
+│   └── template.php                # Frontend maintenance page template
+├── languages/
+│   └── *.pot                       # Translation template
+├── simple-maintenance-mode-white-screen.php  # Main plugin file
+├── uninstall.php                   # Database cleanup on plugin deletion
+└── readme.txt                      # WordPress.org readme
+```
 
-### 1.1
-- Updates after initial review.
-- Enhancement - Readme.txt update.
-- Fix - Functions/Variables name prefixes updated.
+## How It Works
 
-### 1.0
-- Initial release of the plugin.
+- The plugin hooks into `template_redirect` to intercept frontend requests.
+- If maintenance mode is enabled and the visitor is not logged in, the plugin serves a standalone HTML page and exits — bypassing the active theme entirely.
+- Form submissions are processed on `admin_init` (before output) using the Post/Redirect/Get pattern to avoid header conflicts.
+- Settings are stored in the `wp_options` table as `smmws_enabled`, `smmws_text`, and `smmws_font_size`.
+
+## Hooks and Filters
+
+| Hook | Type | Description |
+|------|------|-------------|
+| `admin_menu` | Action | Registers the settings page under the admin menu |
+| `admin_init` | Action | Processes form submissions before output |
+| `admin_bar_menu` | Action | Adds the maintenance mode indicator to the admin bar |
+| `wp_head` / `admin_head` | Action | Injects admin bar indicator styles |
+| `template_redirect` | Action | Intercepts frontend requests to display the maintenance page |
+| `plugin_action_links_*` | Filter | Adds a "Settings" link on the plugins list page |
+
+## Uninstall Behavior
+
+- **Deactivating** the plugin preserves all settings. You can reactivate later without reconfiguring.
+- **Deleting** the plugin removes all options (`smmws_enabled`, `smmws_text`, `smmws_font_size`) from the database via `uninstall.php`.
+
+## Translation
+
+The plugin is translation-ready with the text domain `simple-maintenance-mode-white-screen`. A `.pot` file is included in the `languages/` directory.
 
 ## License
 
-This plugin is licensed under the [GPL-2.0+](https://www.gnu.org/licenses/gpl-2.0.html) License.
+This plugin is licensed under the [GPL-2.0+](https://www.gnu.org/licenses/gpl-2.0.html).

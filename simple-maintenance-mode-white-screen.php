@@ -2,7 +2,7 @@
 /*
  * Plugin Name: Simple Maintenance Mode White Screen
  * Description: Enable maintenance mode with white screen or custom text displayed on the frontend.
- * Version: 1.4
+ * Version: 1.6
  * Requires at least: 5.2
  * Requires PHP: 7.0
  * Author: Nuoria
@@ -51,7 +51,7 @@ add_action('template_redirect', 'smmws_enable_maintenance_mode');
 function smmws_enable_maintenance_mode() {
     if (!is_user_logged_in() && get_option('smmws_enabled', 0)) {
         $smmws_text = get_option('smmws_text', '');
-        $smmws_font_size = get_option('smmws_font_size', '26'); // Default font size: 16px
+        $smmws_font_size = get_option('smmws_font_size', '26'); // Default font size: 26px
 
         // Enqueue the maintenance mode CSS
         wp_enqueue_style('smmws-maintenance-mode', plugin_dir_url(__FILE__) . 'assets/css/maintenance-mode.css', array(), '1.0');

@@ -14,7 +14,7 @@ if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST' &
         if(isset($_POST['smmws_font_size'])) {
             update_option('smmws_font_size', sanitize_text_field(wp_unslash($_POST['smmws_font_size'])));
         }        
-        echo '<div class="updated"><p>' . esc_html('Settings saved.', 'simple-maintenance-mode-white-screen') . '</p></div>';
+        echo '<div class="updated"><p>' . esc_html__('Settings saved.', 'simple-maintenance-mode-white-screen') . '</p></div>';
     }
 }
 

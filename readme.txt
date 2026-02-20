@@ -4,7 +4,7 @@ Donate link: https://buymeacoffee.com/dhanmalage
 Tags: maintenance, maintenance mode, simple, downtime, under construction
 Requires at least: 5.2
 Tested up to: 6.9
-Stable tag: 1.4
+Stable tag: 1.7
 Requires PHP: 7.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -37,6 +37,15 @@ Yes, you can set the font size in the "Font Size (px)" field in the plugin setti
 1. Backend view of plugin settings after plugin activated.
 
 == Changelog ==
+
+= 1.7 =
+* Fix - esc_html() replaced with esc_html__() for proper translation support on settings saved notice.
+
+= 1.6 =
+* Fix - Inconsistent default font size across plugin files.
+
+= 1.5 =
+* Added uninstall.php for clean database cleanup when plugin is deleted.
 
 = 1.4 =
 * Author name updated.

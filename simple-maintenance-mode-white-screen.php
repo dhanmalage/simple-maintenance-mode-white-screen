@@ -2,7 +2,7 @@
 /*
  * Plugin Name: Simple Maintenance Mode White Screen
  * Description: Enable maintenance mode with white screen or custom text displayed on the frontend.
- * Version: 1.4
+ * Version: 1.7
  * Requires at least: 5.2
  * Requires PHP: 7.0
  * Author: Nuoria

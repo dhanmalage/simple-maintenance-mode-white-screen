@@ -4,18 +4,10 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-// Handle form submission
-if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['smmws_settings_nonce'])) {
-    if (wp_verify_nonce(sanitize_key($_POST['smmws_settings_nonce']), 'smmws_save_settings')) {
-        update_option('smmws_enabled', isset($_POST['smmws_enabled']) ? 1 : 0);
-        if(isset($_POST['smmws_text'])) {
-            update_option('smmws_text', sanitize_textarea_field(wp_unslash($_POST['smmws_text'])));
-        }
-        if(isset($_POST['smmws_font_size'])) {
-            update_option('smmws_font_size', sanitize_text_field(wp_unslash($_POST['smmws_font_size'])));
-        }        
-        echo '<div class="updated"><p>' . esc_html__('Settings saved.', 'simple-maintenance-mode-white-screen') . '</p></div>';
-    }
+// Show success notice after redirect
+if (get_transient('smmws_settings_saved')) {
+    delete_transient('smmws_settings_saved');
+    echo '<div class="updated"><p>' . esc_html__('Settings saved.', 'simple-maintenance-mode-white-screen') . '</p></div>';
 }
 
 // Get existing settings

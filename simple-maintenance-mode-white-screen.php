@@ -2,7 +2,7 @@
 /*
  * Plugin Name: Simple Maintenance Mode White Screen
  * Description: Enable maintenance mode with white screen or custom text displayed on the frontend.
- * Version: 1.7
+ * Version: 1.8
  * Requires at least: 5.2
  * Requires PHP: 7.0
  * Author: Nuoria
@@ -40,10 +40,72 @@ function smmws_plugin_action_links($links) {
     return $links;
 }
 
+// Handle form submission early before any output is sent
+add_action('admin_init', 'smmws_handle_settings_save');
+function smmws_handle_settings_save() {
+    if (!isset($_POST['smmws_settings_nonce']) || !isset($_SERVER['REQUEST_METHOD']) || $_SERVER['REQUEST_METHOD'] !== 'POST') {
+        return;
+    }
+
+    if (!wp_verify_nonce(sanitize_key($_POST['smmws_settings_nonce']), 'smmws_save_settings')) {
+        return;
+    }
+
+    update_option('smmws_enabled', isset($_POST['smmws_enabled']) ? 1 : 0);
+    if (isset($_POST['smmws_text'])) {
+        update_option('smmws_text', sanitize_textarea_field(wp_unslash($_POST['smmws_text'])));
+    }
+    if (isset($_POST['smmws_font_size'])) {
+        update_option('smmws_font_size', sanitize_text_field(wp_unslash($_POST['smmws_font_size'])));
+    }
+
+    set_transient('smmws_settings_saved', true, 30);
+    wp_safe_redirect(admin_url('admin.php?page=simple-maintenance-mode-white-screen'));
+    exit;
+}
+
 // Render the settings page
 function smmws_settings_page() {
     // Include the backend HTML file
     include plugin_dir_path(__FILE__) . 'includes/settings-page.php';
+}
+
+// Add admin bar indicator when maintenance mode is active
+add_action('admin_bar_menu', 'smmws_admin_bar_indicator', 100);
+function smmws_admin_bar_indicator($wp_admin_bar) {
+    if (!current_user_can('manage_options') || !get_option('smmws_enabled', 0)) {
+        return;
+    }
+
+    $wp_admin_bar->add_node(array(
+        'id'    => 'smmws-maintenance-indicator',
+        'title' => __('Maintenance Mode: ON', 'simple-maintenance-mode-white-screen'),
+        'href'  => admin_url('admin.php?page=simple-maintenance-mode-white-screen'),
+        'meta'  => array(
+            'title' => __('Click to go to Maintenance Mode settings', 'simple-maintenance-mode-white-screen'),
+        ),
+    ));
+}
+
+// Style the admin bar indicator with a red background
+add_action('wp_head', 'smmws_admin_bar_styles');
+add_action('admin_head', 'smmws_admin_bar_styles');
+function smmws_admin_bar_styles() {
+    if (!current_user_can('manage_options') || !get_option('smmws_enabled', 0)) {
+        return;
+    }
+    ?>
+    <style>
+        #wp-admin-bar-smmws-maintenance-indicator > .ab-item {
+            background-color: #dc3232 !important;
+            color: #fff !important;
+        }
+        #wp-admin-bar-smmws-maintenance-indicator > .ab-item:hover {
+            background-color: #a82222 !important;
+            color: #fff !important;
+        }
+    </style>
+    <?php
 }
 
 // Hook to intercept frontend requests when maintenance mode is enabled

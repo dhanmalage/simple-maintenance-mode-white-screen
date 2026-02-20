@@ -32,6 +32,11 @@ Simple Maintenance Mode allows you to enable a maintenance mode on your WordPres
 
 ## Changelog
 
+### 1.8
+- Enhancement - Added admin bar indicator when maintenance mode is active with link to settings.
+- Enhancement - Moved form processing to admin_init for proper Post/Redirect/Get pattern.
+- Enhancement - Replaced query parameter with transient for settings saved notice.
+
 ### 1.7
 - Fix - esc_html() replaced with esc_html__() for proper translation support on settings saved notice.
 

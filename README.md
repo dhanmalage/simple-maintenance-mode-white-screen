@@ -32,6 +32,9 @@ Simple Maintenance Mode allows you to enable a maintenance mode on your WordPres
 
 ## Changelog
 
+### 1.7
+- Fix - esc_html() replaced with esc_html__() for proper translation support on settings saved notice.
+
 ### 1.6
 - Fix - Inconsistent default font size across plugin files.
 

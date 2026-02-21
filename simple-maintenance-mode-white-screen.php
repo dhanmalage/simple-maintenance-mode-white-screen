@@ -18,6 +18,10 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+// Plugin constants
+define('SMMWS_VERSION', '2.0');
+define('SMMWS_PLUGIN_DIR', plugin_dir_path(__FILE__));
+
 // Add menu to access plugin settings
 add_action('admin_menu', 'smmws_add_admin_menu');
 function smmws_add_admin_menu() {
@@ -53,6 +57,20 @@ function smmws_enqueue_admin_scripts($hook_suffix) {
 
     // Media uploader
     wp_enqueue_media();
+
+    // Admin script
+    wp_enqueue_script(
+        'smmws-admin',
+        plugin_dir_url(__FILE__) . 'assets/js/smmws-admin.js',
+        array('jquery', 'wp-color-picker'),
+        SMMWS_VERSION,
+        true
+    );
+
+    wp_localize_script('smmws-admin', 'smmws_admin_vars', array(
+        'select_logo' => __('Select Logo', 'simple-maintenance-mode-white-screen'),
+        'use_as_logo' => __('Use as Logo', 'simple-maintenance-mode-white-screen'),
+    ));
 }
 
 // Handle form submission early before any output is sent
@@ -63,6 +81,10 @@ function smmws_handle_settings_save() {
     }
 
     if (!wp_verify_nonce(sanitize_key($_POST['smmws_settings_nonce']), 'smmws_save_settings')) {
+        return;
+    }
+
+    if (!current_user_can('manage_options')) {
         return;
     }
 
@@ -94,7 +116,7 @@ function smmws_handle_settings_save() {
 // Render the settings page
 function smmws_settings_page() {
     // Include the backend HTML file
-    include plugin_dir_path(__FILE__) . 'includes/settings-page.php';
+    include SMMWS_PLUGIN_DIR . 'includes/settings-page.php';
 }
 
 // Add admin bar indicator when maintenance mode is active
@@ -146,8 +168,12 @@ function smmws_enable_maintenance_mode() {
         $smmws_font_family = get_option('smmws_font_family', '');
         $smmws_logo = get_option('smmws_logo', '');
 
+        // Send 503 Service Unavailable status with Retry-After header
+        status_header(503);
+        header('Retry-After: 3600');
+
         // Include the template file
-        include plugin_dir_path(__FILE__) . 'includes/template.php';
+        include SMMWS_PLUGIN_DIR . 'includes/template.php';
         exit;
     }
 }

@@ -2,11 +2,11 @@
 /*
  * Plugin Name: Simple Maintenance Mode White Screen
  * Description: Lightweight maintenance mode plugin. Show a coming soon page, under construction notice, or white screen to visitors while you work on your site.
- * Version: 2.0
+ * Version: 2.0.1
  * Requires at least: 5.2
  * Requires PHP: 7.0
- * Author: Nuoria
- * Author URI: https://nuoria.com/
+ * Author: Dhan
+ * Author URI: https://whenalive.com/
  * License: GPL v2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: simple-maintenance-mode-white-screen

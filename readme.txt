@@ -4,7 +4,7 @@ Donate link: https://buymeacoffee.com/dhanmalage
 Tags: maintenance mode, coming soon, under construction, maintenance page, under maintenance
 Requires at least: 5.2
 Tested up to: 6.9
-Stable tag: 2.0
+Stable tag: 2.0.1
 Requires PHP: 7.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -75,6 +75,9 @@ All plugin settings are cleanly removed from the database when you delete the pl
 1. Backend view of plugin settings after plugin activated.
 
 == Changelog ==
+
+= 2.1 =
+* Author name update
 
 = 2.0 =
 * Enhancement - Added background color picker for the maintenance page.

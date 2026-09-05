@@ -3,9 +3,9 @@ Contributors: punsisi
 Donate link: https://buymeacoffee.com/dhanmalage
 Tags: maintenance mode, coming soon, under construction, maintenance page, under maintenance
 Requires at least: 5.2
-Tested up to: 7.0
-Stable tag: 2.0.2
-Requires PHP: 7.0
+Tested up to: 7.1
+Stable tag: 2.0.3
+Requires PHP: 7.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -75,6 +75,9 @@ All plugin settings are cleanly removed from the database when you delete the pl
 1. Backend view of plugin settings after plugin activated.
 
 == Changelog ==
+
+= 2.0.3 =
+* Tested compatibility with WordPress 7.1.
 
 = 2.0.2 =
 * Tested compatibility with WordPress 7.0.
